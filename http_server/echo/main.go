@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/jaswdr/faker"
 )
 
 var (
@@ -22,6 +23,8 @@ func main() {
 	e.GET("/401", unAuthorizedHandler)
 	// GET Headerの読み込み
 	e.GET("/square", squareHandler)
+	// GET ランダムな名前をパッケージで生成して応答
+	e.GET("/random_name", randamNameHandler)
 	// POST Bodyの読み込み
 	e.POST("/incr", incrementHandler)
 
@@ -54,6 +57,10 @@ func squareHandler(c echo.Context) error {
 	}
 	// fmt.Sprintfでフォーマットに沿った文字列を生成できる。
 	return c.String(http.StatusOK, fmt.Sprintf("Square of %d is equal to %d", num, num*num))
+}
+
+func randamNameHandler(c echo.Context) error {
+	return c.String(http.StatusOK, faker.New().Person().Name())
 }
 
 // Bodyから数字を取得してその数字だけCounterをIncrementするハンドラー
