@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/jaswdr/faker"
 )
 
 var (
@@ -22,6 +23,8 @@ func main() {
 	e.GET("/401", unAuthorizedHandler)
 	// GET Headerの読み込み
 	e.GET("/square", squareHandler)
+	// GET ランダムな名前をパッケージで生成して応答
+	e.GET("/random_name", randamNameHandler)
 	// POST Bodyの読み込み
 	e.POST("/incr", incrementHandler)
 
@@ -49,9 +52,15 @@ func squareHandler(c echo.Context) error {
 	if err != nil {
 		// 他のエラーの可能性もあるがサンプルとして纏める
 		return echo.NewHTTPError(http.StatusBadRequest, "num is not integer")
+	} else if num >= 100 {
+		return echo.NewHTTPError(http.StatusBadRequest, "num is larger or equal than 100")
 	}
 	// fmt.Sprintfでフォーマットに沿った文字列を生成できる。
 	return c.String(http.StatusOK, fmt.Sprintf("Square of %d is equal to %d", num, num*num))
+}
+
+func randamNameHandler(c echo.Context) error {
+	return c.String(http.StatusOK, faker.New().Person().Name())
 }
 
 // Bodyから数字を取得してその数字だけCounterをIncrementするハンドラー
@@ -62,11 +71,15 @@ func incrementHandler(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Internal Server Error")
 	}
 	counter += incrRequest.Num
-	return c.String(http.StatusOK, fmt.Sprintf("Value of Counter is %d \n", counter))
+	return c.JSON(http.StatusOK, counterResponse{Counter: counter})
 }
 
 type incrRequest struct {
 	// jsonタグをつける事でjsonのunmarshalが出来る
 	// jsonパッケージに渡すので、Publicである必要がある
 	Num int `json:"num"`
+}
+
+type counterResponse struct {
+	Counter int `json:"counter"`
 }

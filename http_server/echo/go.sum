@@ -1,5 +1,7 @@
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/jaswdr/faker v1.0.2 h1:3iRZztCC4oU67i67qGcyhIxeKgHQQH/iCifJOj3uOSI=
+github.com/jaswdr/faker v1.0.2/go.mod h1:9S4x1SRPC3m+iLgZTx2HZ0/R1/B0hwuL8uvOAiuJNtg=
 github.com/labstack/echo/v4 v4.1.15 h1:4aE6KfJC+wCnMjODwcpeEGWGsRfszxZMwB3QVTECj2I=
 github.com/labstack/echo/v4 v4.1.15/go.mod h1:GWO5IBVzI371K8XJe50CSvHjQCafK6cw8R/moLhEU6o=
 github.com/labstack/gommon v0.3.0 h1:JEeO0bvc78PKdyHxloTKiF8BD5iGrH8T6MSeGvSgob0=

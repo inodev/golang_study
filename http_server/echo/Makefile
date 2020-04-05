@@ -15,5 +15,8 @@ square:
 square_bad_request:
 	curl -i localhost:8080/square -H "num:a"
 
+random_name:
+	curl localhost:8080/random_name
+
 incr:
 	curl -X POST localhost:8080/incr -H 'Content-Type: application/json' -d '{"num":3}'
