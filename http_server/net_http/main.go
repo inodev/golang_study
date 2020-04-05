@@ -21,6 +21,8 @@ func main() {
 	http.HandleFunc("/401", unAuthorizedHandler)
 	// GET Headerの読み込み
 	http.HandleFunc("/square", squareHandler)
+	// GET JSONでデータ取得
+	http.HandleFunc("/users", usersJsonHandler)
 	// POST Bodyの読み込み
 	http.HandleFunc("/incr", incrementHandler)
 
@@ -61,6 +63,26 @@ func squareHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(w, fmt.Sprintf("Square of %d is equal to %d", num, num*num))
 }
 
+func usersJsonHandler(w http.ResponseWriter, req *http.Request) {
+
+	responseData := usersResponse {
+		Status: http.StatusOK,
+		Users:  []User {
+			{Id: 1, Name: "Taro",   Age: 23},
+			{Id: 2, Name: "Hanako", Age: 21},
+		},
+	}
+
+	responseJson, err := json.Marshal(responseData)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(responseJson)
+}
+
 // Bodyから数字を取得してその数字だけCounterをIncrementするハンドラー
 // DBがまだないので簡易的なもの
 func incrementHandler(w http.ResponseWriter, req *http.Request) {
@@ -90,3 +112,15 @@ type incrRequest struct {
 	// jsonパッケージに渡すので、Publicである必要がある
 	Num int `json:"num"`
 }
+
+type usersResponse struct {
+	Status int    `json:"status"`
+	Users  []User `json:"users"`
+}
+
+type User struct{
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+

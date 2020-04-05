@@ -13,5 +13,8 @@ square:
 square_bad_request:
 	curl -i localhost:8080/square -H "num:a"
 
+users:
+	curl localhost:8080/users
+
 incr:
 	curl -X POST localhost:8080/incr -d '{"num":3}'
